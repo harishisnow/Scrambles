@@ -1,0 +1,89 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include <map>
+
+using namespace std;
+
+struct Node {
+    int data;
+    Node *next;
+};
+
+void insertAtEnd(Node **head, int data) {
+    Node *node = (struct Node *)malloc(sizeof(Node));
+    node->data = data;
+    node->next = NULL;
+    if (*head == NULL) {
+        *head = node;
+        return;
+    }
+    else {
+        Node *curr = *head;
+        while (curr->next) {
+            curr = curr->next;
+        }
+        curr->next = node;
+    }
+    return;
+}
+
+void createLoop(Node **head) {
+    (*head)->next->next->next->next->next->next->next->next->next = (*head)->next->next->next->next;
+}
+
+void detectLoop(Node **head) {
+    Node *slow = *head;
+    Node *fast = *head;
+    
+    while (slow && fast) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) {
+            cout << "Loop detected" << endl;
+            return;
+        }
+    }
+}
+
+void printList(Node **head) {
+    Node *curr = *head;
+    int count = 0;
+    if (curr == NULL) {
+        cout << "List is Empty!!" << endl;
+    }
+    else {
+        while (curr && count < 20) {
+            cout << curr->data << " ";
+            curr = curr->next;
+            count++;
+        }
+    }
+}
+int main()
+{
+    Node *head = NULL;
+    map<int, int> mp;
+    insertAtEnd(&head, 4);
+    insertAtEnd(&head, 5);
+    insertAtEnd(&head, 6);
+    insertAtEnd(&head, 7);
+    insertAtEnd(&head, 8);
+    insertAtEnd(&head, 9);
+    insertAtEnd(&head, 10);
+    insertAtEnd(&head, 11);
+    insertAtEnd(&head, 12);
+    
+    createLoop(&head);
+    detectLoop(&head);
+  //  printList(&head);
+    
+
+    return 0;
+}

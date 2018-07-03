@@ -1,0 +1,110 @@
+
+/*
+Given a 5x5 matrix. The values are either 0(dead) or 1(alive).
+If an alive position contains less than 2 adjacent alives (1s), it becomes dead.
+Parse through the given matrix and see if it is alive or not.
+A matrix is considered to be alive if it contains atleast 1 alive node.
+
+NB: The adjacent nodes are usually the nearby 8 positions for inner nodes and for extreme nodes, consider the other end of the matrix (as in like a folded one)
+ie: while considering adjacent node of (1,0), we should also consider (1,4) and
+    while considering adjacent node of (0,1), we should also consider (4,1)
+*/
+
+#include <iostream>
+
+using namespace std;
+
+int arr[5][5] = 
+    {
+        {0,0,0,0,0},
+        {1,1,0,0,1},
+        {0,0,0,0,0},
+        {0,0,0,0,0},
+        {0,0,0,0,0}
+    };
+    
+bool isValidLoc(int pos1, int pos2) {
+    if (pos1 > -1 && pos2 > -1 && pos1 < 5 && pos2 < 5) {
+        return true;
+    }
+    else
+    return false;
+}
+int checkCommonPositions(int i, int j) {
+    int count = 0;
+    if (isValidLoc(i-1, j-1)) {
+        if (arr[i-1][j-1] == 1) {
+            count++;
+        }
+    }
+    if (isValidLoc(i-1, j)) {
+        if (arr[i-1][j] == 1) {
+            count++;
+        }
+    }
+    if (isValidLoc(i-1, j+1)) {
+        if (arr[i-1][j+1] == 1) {
+            count++;
+        }
+    }
+    if (isValidLoc(i, j-1)) {
+        if (arr[i][j-1] == 1) {
+            count++;
+        }
+    }
+    if (isValidLoc(i, j+1)) {
+        if (arr[i][j+1] == 1) {
+            count++;
+        }
+    }
+    if (isValidLoc(i+1, j-1)) {
+        if (arr[i+1][j-1] == 1) {
+            count++;
+        }
+    }
+    if (isValidLoc(i+1, j)) {
+        if (arr[i+1][j] == 1) {
+            count++;
+        }
+    }
+    if (isValidLoc(i+1, j+1)) {
+        if (arr[i+1][j+1] == 1) {
+            count++;
+        }
+    }
+    return count;
+}
+int main()
+{
+    
+    int cc = 0;
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            if (arr[i][j] == 1) {
+                if (i > 0 && j > 0 && i < 4 && j < 4) {
+                    cc = checkCommonPositions(i, j);
+                }
+                else if (i == 0) {
+                    cc = checkCommonPositions(i, j);
+                    cout << i << ":" << j << "->" << cc << endl;
+                    if (arr[4][j] == 1) {
+                        cc++;
+                    }
+                }
+                else if (j == 0) {
+                    cc = checkCommonPositions(i, j);
+                    if (arr[i][4] == 1) {
+                        cc++;
+                    }
+                }
+            }
+        }
+    }
+    if (cc > 0) {
+        cout << "Alive" << endl;
+    }
+    else {
+        cout <<"Dead" << endl;
+    }
+    return 0;
+}

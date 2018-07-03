@@ -1,0 +1,98 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+
+using namespace std;
+
+struct Node {
+    int data;
+    Node *next;
+};
+
+void insertAtEnd(Node **head, int data) {
+    Node *node = (struct Node *)malloc(sizeof(Node));
+    node->data = data;
+    node->next = NULL;
+    if (*head == NULL) {
+        *head = node;
+        return;
+    }
+    else {
+        Node *curr = *head;
+        while (curr->next) {
+            curr = curr->next;
+        }
+        curr->next = node;
+    }
+    return;
+}
+
+void recursiveReverse(Node** head)
+{
+    Node* first;
+    Node* rest;
+ 
+    /* empty list */
+    if (*head == NULL)
+       return;
+ 
+    first = *head;
+    rest  = first->next;
+ 
+    /* List has only one node */
+    if (rest == NULL)
+       return;
+ 
+    /* put the first element on the end of the list */
+    recursiveReverse(&rest);
+    first->next->next  = first;
+ 
+    /* tricky step */
+    first->next  = NULL;
+ 
+    /* fix the head pointer */
+    *head = rest;
+}
+
+
+void printList(Node **head) {
+    Node *curr = *head;
+    if (curr == NULL) {
+        cout << "List is Empty!!" << endl;
+    }
+    else {
+        while (curr) {
+            cout << curr->data << " ";
+            curr = curr->next;
+        }
+    }
+}
+
+Node *head = NULL;
+
+int main()
+{
+    
+    insertAtEnd(&head, 4);
+    insertAtEnd(&head, 5);
+    insertAtEnd(&head, 6);
+    insertAtEnd(&head, 7);
+    insertAtEnd(&head, 8);
+    insertAtEnd(&head, 9);
+    insertAtEnd(&head, 10);
+    insertAtEnd(&head, 11);
+    insertAtEnd(&head, 12);
+    
+    recursiveReverse(&head);
+    
+    printList(&head);
+    
+
+    return 0;
+}

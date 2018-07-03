@@ -1,0 +1,89 @@
+
+#include <iostream>
+
+using namespace std;
+struct Node {
+    int data;
+    Node *next;
+};
+
+void insertatEnd(Node **node, int data) {
+    Node *nd = (struct Node*)malloc(sizeof(struct Node));
+    nd->data = data;
+    nd->next = NULL;
+    if (*node == NULL) {
+        *node = nd;
+        return;
+    }
+    Node *last = *node;
+    while (last->next) {
+        last = last->next;
+    }
+    last->next = nd;
+    return;
+}
+
+void insertatBeginning(Node **node, int data) {
+    Node *nd = (struct Node*)malloc(sizeof(struct Node));
+    nd->data = data;
+    if (*node == NULL) {
+        *node = nd;
+        (*node)->next = NULL;
+        return;
+    }
+    nd->next = *node;
+    *node = nd;
+    return;
+}
+    
+void insertAfter(Node **node, int datatofind, int datatoinsert) {
+    Node *nd = (struct Node*)malloc(sizeof(struct Node));
+    nd->data = datatoinsert;
+    Node *curr = *node;
+    while (curr) {
+        if (curr->data == datatofind) {
+            nd->next = curr->next;
+            curr->next = nd;
+        }
+        curr = curr->next;
+    }
+}
+
+void printNthElementfromEnd(Node **head, int n) {
+    Node *slowptr = *head;
+    Node *fastptr = *head;
+    for (int i = 0; i < n; i++)
+        fastptr = fastptr->next;
+    while(fastptr) {
+        fastptr = fastptr->next;
+        slowptr = slowptr->next;
+    }
+    cout << endl << slowptr->data << endl;
+}
+
+void printList(Node *head) {
+    while (head) {
+        cout << head->data << " ";
+        head = head->next;
+    }
+}
+
+int main()
+{
+    struct Node *head = NULL;
+    int n;
+    insertatEnd(&head, 5);
+    insertatEnd(&head, 6);
+    insertatEnd(&head, 7);
+    insertatEnd(&head, 8);
+    insertatEnd(&head, 9);
+    insertatBeginning(&head, 4);
+    insertAfter(&head, 5, 11);
+    
+    cout << "Enter the nth element to be search from the end: " << endl;
+    cin >> n;
+    
+    printList(head);
+    printNthElementfromEnd(&head, n);
+    return 0;
+}

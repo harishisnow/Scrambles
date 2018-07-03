@@ -1,0 +1,115 @@
+
+#include <iostream>
+
+using namespace std;
+struct Node {
+    int data;
+    Node *next;
+};
+
+void insertatEnd(Node **node, int data) {
+    Node *nd = (struct Node*)malloc(sizeof(struct Node));
+    nd->data = data;
+    nd->next = NULL;
+    if (*node == NULL) {
+        *node = nd;
+        return;
+    }
+    Node *last = *node;
+    while (last->next) {
+        last = last->next;
+    }
+    last->next = nd;
+    return;
+}
+
+void insertatBeginning(Node **node, int data) {
+    Node *nd = (struct Node*)malloc(sizeof(struct Node));
+    nd->data = data;
+    if (*node == NULL) {
+        *node = nd;
+        (*node)->next = NULL;
+        return;
+    }
+    nd->next = *node;
+    *node = nd;
+    return;
+}
+    
+void insertAfter(Node **node, int datatofind, int datatoinsert) {
+    Node *nd = (struct Node*)malloc(sizeof(struct Node));
+    nd->data = datatoinsert;
+    Node *curr = *node;
+    while (curr) {
+        if (curr->data == datatofind) {
+            nd->next = curr->next;
+            curr->next = nd;
+        }
+        curr = curr->next;
+    }
+}
+
+void deleteHead(Node **node) {
+    
+    if (*node) {
+        Node *old_head = *node;
+        *node = (*node)->next;
+    
+        old_head->next = NULL;
+        free(old_head);
+    }
+}
+
+void deleteTail(Node **node) {
+    
+    Node *last = *node;
+    Node *tmp;
+    while (last->next->next) {
+        last = last->next;
+    }    
+    tmp = last->next;
+    last->next = NULL;
+    free(tmp);
+}
+
+void deleteNode(Node **node, int data) {
+    Node *curr = *node;
+    Node *prev = *node;
+    Node *tmp;
+    while (curr) {
+        if (curr->data == data) {
+            if (curr == *node) {
+                deleteHead(node);
+                return;
+            }
+            prev->next = curr->next;
+            tmp = curr;
+            free(tmp);
+        }
+        prev = curr;
+        curr = curr->next;
+    }
+}
+
+void printList(Node *head) {
+    while (head) {
+        cout << head->data << " ";
+        head = head->next;
+    }
+}
+
+int main()
+{
+    struct Node *head = NULL;
+    insertatEnd(&head, 5);
+    insertatEnd(&head, 6);
+    insertatBeginning(&head, 4);
+    insertAfter(&head, 5, 11);
+    
+    deleteHead(&head);
+    deleteTail(&head);
+    deleteNode(&head, 11);
+
+    printList(head);
+    return 0;
+}

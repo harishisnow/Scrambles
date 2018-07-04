@@ -1,5 +1,6 @@
 
 /*
+#############################################################################################################
 Given a 5x5 matrix. The values are either 0(dead) or 1(alive).
 If an alive position contains less than 2 adjacent alives (1s), it becomes dead.
 Parse through the given matrix and see if it is alive or not.
@@ -8,6 +9,7 @@ A matrix is considered to be alive if it contains atleast 1 alive node.
 NB: The adjacent nodes are usually the nearby 8 positions for inner nodes and for extreme nodes, consider the other end of the matrix (as in like a folded one)
 ie: while considering adjacent node of (1,0), we should also consider (1,4) and
     while considering adjacent node of (0,1), we should also consider (4,1)
+#############################################################################################################
 */
 
 #include <iostream>

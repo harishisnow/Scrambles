@@ -1,5 +1,6 @@
-# Tower of Hanoi problem
-
+/*
+# Tower of Hanoi problem: recursive solution for n number of disks
+*/
 // Example program
 #include <iostream>
 #include <string>

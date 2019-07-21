@@ -1,0 +1,30 @@
+# Tower of Hanoi problem
+
+// Example program
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+void tower_of_hanoi(int n, char src, char dest, char aux) {
+    
+    if (n == 1) {
+        cout << "Move peg " << n << " from " << src << " to " << dest << "\n";
+        return;
+    }
+    tower_of_hanoi(n-1, src, aux, dest);
+    cout << "Move peg " << n << " from " << src << " to " << dest << "\n";
+    tower_of_hanoi(n-1, aux, dest, src);
+}
+
+int main()
+{
+  
+  int n;
+  cout << "Tower Of Hanoi" << "\n";
+  cout << "Enter no of disks" << "\n";
+  
+  cin >> n;
+  
+  tower_of_hanoi(n, 'A', 'C', 'B');
+}
